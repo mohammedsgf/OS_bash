@@ -9,7 +9,6 @@ col5=5
 col6=3
 col7=12
 
-IFS=','
 
 if [ $# -ne 1 ]
 then
@@ -21,11 +20,13 @@ fi
 if [ -s $1 ]
 then
     count=1
-    while read -r label1 label2 label3 label4 label5 label6 label7
+    while IFS=',' read -r label1 label2 label3 label4 label5 label6 label7
     do
         if [ $count -gt 1 ]
         then
-
+            
+            IFS=':' read ret label1 <<< "$label1"
+            label1=${label1//[[:blank:]]/}
             temp1=$((${#label1} + ${#label2} + 1))
             if [ "$temp1" -gt "$col1" ]
             then
@@ -65,6 +66,7 @@ then
 
         fi
         ((count++))
+        IFS=','
 
     done < $1
 
@@ -102,10 +104,13 @@ then
     do
         if [ $count -gt 1 ]
         then
+            IFS=':' read ret label1 <<< "$label1"
+            label1=${label1//[[:blank:]]/}
             fullName="$label2 $label1"
             printf "%-${col1}s   %-${col3}s   %-${col4}s   %-${col5}s   %-${col6}s   %-${col7}s\n" $fullName $label3 $label4 $label5 $label6 $label7
         fi
         ((count++))
+        IFS=','
     done < $1
 else
     echo "Error:file specfied have zero size or does not exist"
