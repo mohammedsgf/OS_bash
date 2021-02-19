@@ -1,5 +1,9 @@
 #!/bin/bash
 
+## This script take a tamplate text file and replace each spicfied keyword in it by a name from list of names then save text file for each name.
+
+## Aouther: Mohammed A. Alsaggaf
+## Date: 2/19/2021
 
 if [ $# -eq 3 ] #to check if all the arguments is specfied
 then
@@ -7,7 +11,7 @@ then
     while read name; do #While to read the names from the names list
         while read line; do #while to read lines from the tamplate file
             echo ${line//$2/$name} #replace
-        done < $1 > "message-to-$name" #redirect from tmaplate to new file
+        done < $1 > "message-to-$name.txt" #redirect from tmaplate to new file
     done < $3 #redirect from nameslist
     echo "Mergining is Done!"
     else

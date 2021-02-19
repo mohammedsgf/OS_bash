@@ -1,18 +1,24 @@
 #!/bin/bash
 
-daysThresh=30
-now=$(date +'%m/%d/%Y')
-if [ ! -d $HOME/trash ]
+## This script make the safe remove for the files, any file after specfied daysThresh will be deleted.
+
+## Aouther: Mohammed A. Alsaggaf
+## Date: 2/19/2021
+
+daysThresh=30 #number of days before removng files
+now=$(date +'%m/%d/%Y') #current date
+
+if [ ! -d $HOME/trash ] #trash and trash record creation
 then
     echo "trash file and its hidden record has been created"
     mkdir $HOME/trash
     touch $HOME/.trashrc
 fi
 
-case $1 in
+case $1 in #check the option
 
-    -c)
-        echo "checking"
+    -c) #check and delet overdue files
+        
         
         while IFS="," read filename fileDir fileDate
         do
@@ -35,13 +41,14 @@ case $1 in
       mv $HOME/.trashrc.t $HOME/.trashrc
         ;;
 
-    -r)
-        echo "recovery"
+    -r) #recover the files to their directories
+        
         
         for i in "$@"
         do
             while IFS="," read filename fileDir fileDate
             do
+ #if the input files match with the record, then do the recovery and update the record
                 if [ $i == $filename ]
                 then
                     mv $HOME/trash/$i $fileDir
@@ -53,8 +60,7 @@ case $1 in
         done
         ;;
 
-    -h)
-        echo "recovery2"
+    -h) #recover to the curremt directory
         currentDir=$(pwd)
 
         for i in "$@"
@@ -73,8 +79,8 @@ case $1 in
 
         ;;
 
-    *)
-        echo "remove"
+    *) #remove
+        
         fileDir=$(pwd)
 
         for n in "$@"

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+## This script a csv any csv file of 6 coulmns ans dispaly it evenly spaced on the screen.
+
+## Aouther: Mohammed A. Alsaggaf
+## Date: 2/19/2021
 
 #columns initial lengths
 col1=9
@@ -10,7 +14,7 @@ col6=3
 col7=12
 
 
-if [ $# -ne 1 ]
+if [ $# -ne 1 ] #input condtion
 then
     echo -e "Error:please use the following format:\npprint [csvfile]"
     exit 1
@@ -19,6 +23,7 @@ fi
 #specfiyng the length of each length by reading all th file and save the max length in each column
 if [ -s $1 ]
 then
+    #caluclate the max length of each column
     count=1
     while IFS=',' read -r label1 label2 label3 label4 label5 label6 label7
     do
@@ -79,6 +84,7 @@ then
 
     printf "%-${col1}s   %-${col3}s   %-${col4}s   %-${col5}s   %-${col6}s   %-${col7}s\n" $name $addrs $city $state $zip $num
 
+    #print the dashes
     count=1
     for i in {$col1,$col3,$col4,$col5,$col6,$col7}; do
 
@@ -99,6 +105,7 @@ then
             ((count++))
     done
 
+    #print the columns
     count=1
     while read -r label1 label2 label3 label4 label5 label6 label7
     do

@@ -1,13 +1,25 @@
 #!/bin/bash
 
+## This script creates a phone list in the home directory,
+## eahc line consist of two fields (Name,Number).
 
-Dir="/home/$USERNAME/phonelist"
+## -a:  add new field to the list (phone -a Name Number)
+## -g: get a specfied field by name or number or both (phone -g Name/Number)
+## -c: change spicfied number with another one (phone -c Number1 Number2)
+## -d: dlete spicfied name or number or both (phone -d Name/Number)
+## default: the phone list will be dispalyed on the screen (phone)
 
-if [ $# -lt 1 ]
+## Aouther: Mohammed A. Alsaggaf
+## Date: 2/19/2021
+
+
+Dir="$HOME/phonelist" #list directory
+
+if [ $# -lt 1 ] #default call
 then
     cat $Dir
 else
-    opt=$1
+    opt=$1 #option
 
     case $opt in
 
@@ -16,14 +28,15 @@ else
             then
                 str="$2,$3"
                 echo "$str" >> $Dir
-                echo "saved"
-                echo "$str"
+                #echo "saved"
+                #echo "$str"
             fi
             ;;
         -g)#get the name and number
             if [ $# -eq 2 ]
             then
-                cat $Dir | grep $2
+                echo "$2"
+                grep "$2" $Dir
             fi
             ;;
         -c)#change number1 with number2
